@@ -2,6 +2,7 @@ package zzx.recyclerviewdemo.com.recyclerviewdemo.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,12 @@ public class StaggeredGridLayoutAdapter extends RecyclerView.Adapter<StaggeredGr
         ViewGroup.LayoutParams lp = holder.id_num.getLayoutParams();
         lp.height = mHeights.get(position);
 //        lp.width = mWidths.get(position);
-
+//        holder.id_num.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.e("width", holder.id_num.getWidth() + "");
+//            }
+//        });
         holder.id_num.setLayoutParams(lp);
         holder.id_num.setText(resList.get(position) + "");
     }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import zzx.recyclerviewdemo.com.recyclerviewdemo.activities.GridLayoutManagerActivity;
 import zzx.recyclerviewdemo.com.recyclerviewdemo.activities.LinearLayoutManagerActivity;
+import zzx.recyclerviewdemo.com.recyclerviewdemo.activities.StaggeredGridLayoutManagerActivity;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tv1;
@@ -58,7 +59,13 @@ public class MainActivity extends AppCompatActivity {
         tv3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MainActivity.this, StaggeredGridLayoutManagerActivity.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, tv3, "tv3");
+                    startActivity(intent, options.toBundle());
+                }else {
+                    startActivity(intent);
+                }
             }
         });
     }

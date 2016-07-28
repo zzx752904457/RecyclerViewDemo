@@ -7,46 +7,60 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import zzx.recyclerviewdemo.com.recyclerviewdemo.R;
 
 /**
- * Created by admin on 2016/7/27.
+ * Created by admin on 2016/7/28.
  */
-public class NormalLayoutAdapter extends RecyclerView.Adapter<NormalLayoutAdapter.MyViewHolder> {
+public class StaggeredGridLayoutAdapter extends RecyclerView.Adapter<StaggeredGridLayoutAdapter.MyViewHolder> {
+
     private Context context;
     private List<String> resList;
     private MyItemClickListener itemClickListener;
+    private List<Integer> mHeights;
+    private List<Integer> mWidths;
 
-    public NormalLayoutAdapter(Context context) {
+    public StaggeredGridLayoutAdapter(Context context, List<String> resList) {
         this.context = context;
+        this.resList = resList;
+        mHeights = new ArrayList<Integer>();
+        for (int i = 0; i < resList.size(); i++) {
+            mHeights.add((int) (100 + Math.random() * 300));
+        }
+        mWidths = new ArrayList<Integer>();
+        for (int i = 0; i < resList.size(); i++) {
+            mWidths.add((int) (100 + Math.random() * 300));
+        }
     }
 
     public void setOnItemClickListener(MyItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
-    public void setData(List<String> resList){
-        this.resList = resList;
-        notifyDataSetChanged();
-    }
-
-    public void addData(int position){
+    public void addData(int position) {
         resList.add(position, "鲜鲜哥");
+        mHeights.add((int) (100 + Math.random() * 300));
+        mWidths.add((int) (100 + Math.random() * 300));
         notifyItemInserted(position);
 //        notifyDataSetChanged();
     }
 
-    public void removeData(int position){
+    public void removeData(int position) {
         resList.remove(position);
+        mHeights.remove(new Random().nextInt(resList.size()));
+        mWidths.remove(new Random().nextInt(resList.size()));
         notifyItemRemoved(position);
 //        notifyDataSetChanged();
     }
 
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.linear_item_layout, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(itemView);
         return myViewHolder;
     }
@@ -55,6 +69,11 @@ public class NormalLayoutAdapter extends RecyclerView.Adapter<NormalLayoutAdapte
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.id_num = (TextView) holder.itemView.findViewById(R.id.id_num);
 
+        ViewGroup.LayoutParams lp = holder.id_num.getLayoutParams();
+        lp.height = mHeights.get(position);
+//        lp.width = mWidths.get(position);
+
+        holder.id_num.setLayoutParams(lp);
         holder.id_num.setText(resList.get(position) + "");
     }
 
@@ -65,7 +84,6 @@ public class NormalLayoutAdapter extends RecyclerView.Adapter<NormalLayoutAdapte
         }
         return 0;
     }
-
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView id_num;

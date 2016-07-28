@@ -18,6 +18,7 @@ import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
 import it.gmariotti.recyclerview.itemanimator.ScaleInOutItemAnimator;
 import it.gmariotti.recyclerview.itemanimator.SlideInOutTopItemAnimator;
 import zzx.recyclerviewdemo.com.recyclerviewdemo.R;
+import zzx.recyclerviewdemo.com.recyclerviewdemo.adapters.GridLayoutAdapter;
 import zzx.recyclerviewdemo.com.recyclerviewdemo.adapters.NormalLayoutAdapter;
 import zzx.recyclerviewdemo.com.recyclerviewdemo.decorations.DividerGridItemDecoration;
 
@@ -26,7 +27,7 @@ public class GridLayoutManagerActivity extends AppCompatActivity {
     private TextView remove2;
     private TextView add2;
     private RecyclerView recyclerView2;
-    private NormalLayoutAdapter mAdapter;
+    private GridLayoutAdapter mAdapter;
     private List<String> resList;
     private DividerGridItemDecoration dividerGridItemDecoration;
 
@@ -48,9 +49,9 @@ public class GridLayoutManagerActivity extends AppCompatActivity {
 
         //设置布局
         recyclerView2.setLayoutManager(new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false));
-        //设置间隔
-        dividerGridItemDecoration = new DividerGridItemDecoration(this);
-        recyclerView2.addItemDecoration(dividerGridItemDecoration);
+//        //设置间隔
+//        dividerGridItemDecoration = new DividerGridItemDecoration(this);
+//        recyclerView2.addItemDecoration(dividerGridItemDecoration);
         //设置item动画
         recyclerView2.setItemAnimator(new DefaultItemAnimator());
 
@@ -59,16 +60,16 @@ public class GridLayoutManagerActivity extends AppCompatActivity {
             resList.add((char) i + "");
         }
 
-        mAdapter = new NormalLayoutAdapter(this);
+        mAdapter = new GridLayoutAdapter(this);
         mAdapter.setData(resList);
 
-        SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(mAdapter, recyclerView2);
-        animatorAdapter.getViewAnimator().setInitialDelayMillis(200);
-        recyclerView2.setAdapter(animatorAdapter);
+//        SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(mAdapter, recyclerView2);
+//        animatorAdapter.getViewAnimator().setInitialDelayMillis(200);
+        recyclerView2.setAdapter(mAdapter);
     }
 
     private void initListener() {
-        mAdapter.setOnItemClickListener(new NormalLayoutAdapter.MyItemClickListener() {
+        mAdapter.setOnItemClickListener(new GridLayoutAdapter.MyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Toast toast = null;
